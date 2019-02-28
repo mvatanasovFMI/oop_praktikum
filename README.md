@@ -3,6 +3,8 @@ informatika 6 grupa
 
 how to get repo:
 git clone https://github.com/mvatanasovFMI/oop_praktikum.git
+git config user.email "email@example.com"
+git config user.name "name"
 
 how to create your branch:
 cd git/oop_praktikum
