@@ -19,3 +19,4 @@ git commit -m "some message"
 
 to put in origin:
 git push origin "yourname"
+
