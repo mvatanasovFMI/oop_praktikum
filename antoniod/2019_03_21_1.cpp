@@ -9,16 +9,16 @@ using namespace std;
 
 int main()
 {
-	fstream fileName;
-	fileName.open("MYFIRSTFILE.txt");
+	ofstream fileName("MYFIRSTFILE1.txt", ios::out);
+	
 	fileName << "Hello Stream!" << endl;
 	fileName.close();
 
-	fstream* OtherFileName = new fstream();
-	OtherFileName->open("MYSECONDFILE.txt");
-	*OtherFileName << "Hello Stream!" << endl;
-	OtherFileName->close();
-	delete OtherFileName;
+	//ofstream* OtherFileName = new ofstream();
+	//OtherFileName->open("MYSECONDFILE.txt");
+	//OtherFileName->operator<< "Hello Stream!" << endl;
+	//OtherFileName->close();
+	//delete OtherFileName;
 
 	system("pause");
 	return 0;
