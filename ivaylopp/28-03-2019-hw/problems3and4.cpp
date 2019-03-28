@@ -159,6 +159,8 @@ int main() {
 	Person ivan, nedqlko;
 	ivan.Init("Ivan Georgiev", 22, 0.5);
 	ivan.Init("Nedqlko Bogdanov", 23, 4);
-
+	ivan.ExportToFile();
+	ivan.ReadFromFileToConsole();
+	system("pause");
 	return 0;
 }
