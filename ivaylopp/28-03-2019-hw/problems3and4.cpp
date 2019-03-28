@@ -1,3 +1,7 @@
+// ConsoleApplication14.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -12,9 +16,10 @@ private: // encapsulation of data
 public:
 	void Init(const char* pName, int age, float salary);
 	Person();
+	Person(Person&);
 	Person(const char* pName, int age, float salary);
 	~Person(); /* Using special method call  Destructor, to free allocated memory for m_pFullName*/
-	// Setters
+			   // Setters
 	void SetFullName(const char* pName);
 	void SetAge(int age);
 	void SetSalary(float salary);
@@ -23,11 +28,13 @@ public:
 	int GetAge() const;
 	float GetSalary() const;
 	// Print methods
-	void Print() const; 
-	void PrintMembersOffsetsAndSizeOf () const;
+	void Print() const;
+	void PrintMembersOffsetsAndSizeOf() const;
 	// File write/read
-	void ExportToFile() const;
-	void ReadFromFileToConsole() const;
+	friend void ExportToFile(Person&);
+	friend void ExportToFileInBinary(Person&);
+	friend void ReadFromFileToConsole();
+	friend void ReadFromBinaryFileToConsole();
 };
 
 void Person::Init(const char* pName, int age, float salary) {
@@ -40,7 +47,7 @@ void Person::Init(const char* pName, int age, float salary) {
 		m_pFullName = NULL;
 		return;
 	}
-	
+
 	size_t BufferSize = strlen(pName) + 1;
 
 	char* buffer = new char[BufferSize];
@@ -51,7 +58,10 @@ void Person::Init(const char* pName, int age, float salary) {
 
 Person::~Person() {
 	if (m_pFullName != NULL)
+	{
 		delete[] m_pFullName;
+		m_pFullName = NULL;
+	}
 }
 
 void Person::SetFullName(const char* pName) {
@@ -61,7 +71,7 @@ void Person::SetFullName(const char* pName) {
 		m_pFullName = NULL;
 		return;
 	}
-	
+
 	size_t BufferSize = strlen(pName) + 1;
 
 	char* buffer = new char[BufferSize];
@@ -122,7 +132,7 @@ Person::Person(const char* pName, int age, float salary) {
 		m_pFullName = NULL;
 		return;
 	}
-	
+
 	size_t BufferSize = strlen(pName) + 1;
 
 	char* buffer = new char[BufferSize];
@@ -131,20 +141,35 @@ Person::Person(const char* pName, int age, float salary) {
 	strcpy_s(m_pFullName, BufferSize, pName);
 }
 
-void Person::ExportToFile()
+Person::Person(Person& person) {
+
+	SetFullName(person.GetFullName());
+	m_age = (person.GetAge());
+	m_salary = (person.GetSalary());
+}
+
+void ExportToFile(Person& person)
 {
 	ofstream file;
 	file.open("persons.txt");
-	int n = strlen(m_pFullName)
+	int n = strlen(person.m_pFullName);
 	for (int i = 0; i < n; i++)
-		file << str[i];
-	file << ',' << m_age;
-	file << ',' << m_salary;
+		file << person.m_pFullName[i];
+	file << ',' << person.m_age;
+	file << ',' << person.m_salary;
 	file << '\n';
-	file.close()
+	file.close();
 }
 
-void Person::ReadFromFileToConsole()
+void ExportToFileInBinary(Person& person)
+{
+	ofstream file;
+	file.open("persons_binary.txt", ios::binary);
+	file.write((char *)&person, sizeof(Person));
+	file.close();
+}
+
+void ReadFromFileToConsole()
 {
 	ifstream file;
 	file.open("persons.txt");
@@ -153,14 +178,24 @@ void Person::ReadFromFileToConsole()
 		file.get(chbuff);
 		cout << chbuff;
 	}
+	file.close();
+}
+
+void ReadFromBinaryFileToConsole()
+{
+	ifstream file;
+	Person person;
+	file.open("persons_binary.txt", ios::binary);
+	file.read((char*)&person, sizeof(Person)); //doesnt seem to call the copy-constructor
+	person.Print();
+	file.close();
 }
 
 int main() {
-	Person ivan, nedqlko;
-	ivan.Init("Ivan Georgiev", 22, 0.5);
-	ivan.Init("Nedqlko Bogdanov", 23, 4);
-	ivan.ExportToFile();
-	ivan.ReadFromFileToConsole();
+	Person nedqlko;
+	nedqlko.Init("Nedqlko Bogdanov", 23, 4);
+	ExportToFileInBinary(nedqlko);
+	ReadFromBinaryFileToConsole();
 	system("pause");
 	return 0;
 }
