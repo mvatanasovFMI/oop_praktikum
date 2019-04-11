@@ -9,6 +9,97 @@ Point3D::Point3D(double x, double y, double z)
 	SetZ(z);//m_z = z;
 }
 
+Point3D::Point3D(const Point3D& point)
+{
+	SetPoint(point);
+}
+
+Point3D& Point3D::operator=(const Point3D& point) 
+{
+	if (this != &point) 
+	{
+		SetPoint(point);
+	} 
+
+	return *this;
+}
+
+Point3D& Point3D::operator++() {
+	SetX(GetX() + 1);
+	SetY(GetY() + 1);
+	SetZ(GetZ() + 1);
+	return *this;
+}
+
+Point3D& Point3D::operator--() {
+	SetX(GetX() - 1);
+	SetY(GetY() - 1);
+	SetZ(GetZ() - 1);
+
+	return *this;
+}
+
+Point3D& Point3D::operator-() {
+	SetX(-GetX());
+	SetY(-GetY());
+	SetZ(-GetZ());
+
+	return *this;
+}
+
+std::ostream& Point3D::operator<< (std::ostream& offstream)
+{
+	offstream << GetX() << std::endl;
+	offstream << GetY() << std::endl;
+	offstream << GetZ() << std::endl;
+
+	return offstream;
+}
+
+std::ostream& operator<<(std::ostream& offstream, Point3D& vector)
+{
+	return vector.operator<<(offstream);
+}
+
+std::istream& Point3D::operator>>(std::istream& instream)
+{
+	int cordinate;
+	instream >> cordinate;
+	SetX(cordinate);
+	instream >> cordinate;
+	SetY(cordinate);
+	instream >> cordinate;
+	SetZ(cordinate);
+
+	return instream;
+}
+
+std::istream& operator>>(std::istream& instream, Point3D& vector)
+{
+	return vector.operator>>(instream);
+}
+
+Point3D Point3D::operator++(int number)
+{
+	Point3D& newPoint=*this;
+	SetX(GetX() + 1);
+	SetY(GetY() + 1);
+	SetZ(GetZ() + 1);
+
+	return newPoint;
+}
+Point3D Point3D::operator--(int number)
+{
+	Point3D& newPoint = *this;
+	SetX(GetX() - 1);
+	SetY(GetY() - 1);
+	SetZ(GetZ() - 1);
+
+	return newPoint;
+}
+Point3D::~Point3D()
+{}
+
 double Point3D::GetX() const { return m_x; }
 double Point3D::GetY() const { return m_y; }
 double Point3D::GetZ() const { return m_z; }

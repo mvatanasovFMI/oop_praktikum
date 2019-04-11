@@ -7,7 +7,7 @@ public:
 	Triangle(); 
 	Triangle(const Triangle& point);
 	Triangle& operator=(const Triangle& point);
-	~Triangle();
+	~Triangle() {}
 	operator double() const; // return Perimeter
 
 	void SetA(const Point3D&); //using helper function or operator =
@@ -25,6 +25,9 @@ public:
 	double GetPerimeter() const; // use getters and Distance helper
 
 	double GetPerimeterAlt();
+private:
+	void Triangle::SetTriangle(const Triangle& triangle);
+
 private:
 	Point3D m_a;
 	Point3D m_b;

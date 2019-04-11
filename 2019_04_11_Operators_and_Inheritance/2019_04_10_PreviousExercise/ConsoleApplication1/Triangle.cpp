@@ -26,6 +26,27 @@ Triangle::Triangle()
 	this->SetC(point);
 }
 
+void Triangle::SetTriangle(const Triangle& triangle)
+{
+	this->SetA(triangle.GetA());
+	this->SetB(triangle.GetB());
+	this->SetC(triangle.GetC());
+}
+
+Triangle::Triangle(const Triangle& triangle)
+{
+	SetTriangle(triangle);
+}
+
+Triangle& Triangle::operator=(const Triangle& triangle)
+{
+	if (this != &triangle)
+	{
+		SetTriangle(triangle);
+	}
+	return *this;
+}
+
 double Triangle::GetPerimeter() const
 {
 	return GetA().Distance(GetB()) + GetB().Distance(GetC()) + GetA().Distance(GetC());
@@ -37,3 +58,10 @@ double Triangle::GetPerimeterAlt()
 		Point3D::Distance(GetA(), GetC()) +
 		Point3D::Distance(GetC(), GetB());
 };
+
+Triangle::operator double() const
+{
+	return GetPerimeter();
+}
+
+
