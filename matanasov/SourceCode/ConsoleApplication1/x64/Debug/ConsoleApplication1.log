@@ -1,0 +1,5 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (x64\Debug\) contains files shared from another project (ConsoleApplication1.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  ColorPoint3D.cpp
+c:\git\oop_praktikum\matanasov\sourcecode\consoleapplication1\colorpoint3d.cpp(56): warning C4717: 'operator>>': recursive on all control paths, function will cause runtime stack overflow
+c:\git\oop_praktikum\matanasov\sourcecode\consoleapplication1\colorpoint3d.cpp(46): warning C4717: 'operator<<': recursive on all control paths, function will cause runtime stack overflow
+  ConsoleApplication1.vcxproj -> C:\git\oop_praktikum\matanasov\SourceCode\x64\Debug\ConsoleApplication.exe
