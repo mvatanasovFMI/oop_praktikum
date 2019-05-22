@@ -83,6 +83,52 @@ std::ostream& operator<<(std::ostream& offstream, Point3D<NType1>& vector)
 //	return vector.operator<<(offstream);
 //}
 
+
+class FunctionOverridingBase
+{
+public:
+	virtual void method()
+	{
+		cout << "base method" << endl;
+	}
+};
+
+class FunctionOverridingDerived :public FunctionOverridingBase
+{
+public:
+	void method() 
+	{
+		cout << "derived method" << endl;
+	}
+};
+
+//main function 
+void main()
+{
+	FunctionOverridingDerived derived;
+	FunctionOverridingBase *ptrBase = &derived;
+	ptrBase->method();
+}
+
+class FunctionalOverloading
+{
+public:
+	void print(int x)
+	{
+		cout << "x = " << x << endl;
+	}
+
+	void print(double x)
+	{
+		cout << "x = " << x << endl;
+	}
+
+	void print(int x, int y)
+	{
+		cout << "x and y = " << x << ", " << y << endl;
+	}
+};
+
 template <class T>
 std::istream& Point3D<T>::operator>>(std::istream& instream)
 {
